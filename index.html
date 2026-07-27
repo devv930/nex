@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NEX AI — AI-Powered Trading Intelligence by Trader Nex</title>
+<meta name="description" content="NEX AI is an AI-powered market analysis system delivered free through Telegram.">
+<meta name="theme-color" content="#080C10">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#080C10;
+    --bg-alt:#0D1319;
+    --line:#1B252E;
+    --ink:#EAF1F3;
+    --ink-dim:#8FA0AA;
+    --signal:#39FF9E;
+    --signal-dim:#1E7A54;
+    --font-display:'Space Grotesk',sans-serif;
+    --font-body:'Inter',sans-serif;
+    --font-mono:'JetBrains Mono',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--signal);color:#04120B;}
+  .wrap{max-width:720px;margin:0 auto;padding:0 20px;}
+
+  /* NAV */
+  header.nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(8,12,16,.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;max-width:720px;margin:0 auto;}
+  .brand{display:flex;flex-direction:column;line-height:1.05;}
+  .brand-name{font-family:var(--font-display);font-weight:700;font-size:17px;letter-spacing:.02em;}
+  .brand-name span{color:var(--signal);}
+  .brand-sub{font-family:var(--font-mono);font-size:9px;letter-spacing:.16em;color:var(--ink-dim);text-transform:uppercase;margin-top:2px;}
+  .nav-cta{
+    font-family:var(--font-mono);font-size:11px;letter-spacing:.05em;
+    border:1px solid var(--signal-dim);color:var(--signal);
+    padding:8px 14px;border-radius:6px;transition:.2s;text-transform:uppercase;
+  }
+  .nav-cta:hover{background:var(--signal);color:#04120B;border-color:var(--signal);}
+
+  /* HERO — centered */
+  .hero{
+    text-align:center;
+    padding:64px 0 48px;
+    border-bottom:1px solid var(--line);
+    display:flex;flex-direction:column;align-items:center;
+  }
+  .hero-eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--signal);border:1px solid var(--signal-dim);border-radius:100px;
+    padding:6px 14px;margin-bottom:22px;
+  }
+  .hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--signal);box-shadow:0 0 8px var(--signal);}
+  .hero h1{
+    font-family:var(--font-display);font-weight:700;
+    font-size:clamp(32px,7vw,52px);letter-spacing:-.02em;line-height:1.06;max-width:520px;
+  }
+  .hero h1 em{font-style:normal;color:var(--signal);}
+  .hero p.lede{
+    margin-top:18px;max-width:440px;color:var(--ink-dim);font-size:16px;line-height:1.6;
+  }
+  .hero-actions{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:28px;}
+  .btn-primary{
+    font-family:var(--font-mono);font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;
+    background:var(--signal);color:#04120B;font-weight:600;
+    padding:14px 24px;border-radius:8px;display:inline-flex;align-items:center;gap:10px;
+    transition:.25s;
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(57,255,158,.25);}
+  .hero-tags{font-family:var(--font-mono);font-size:11px;color:var(--ink-dim);letter-spacing:.03em;}
+
+  /* small signal chip */
+  .signal-chip{
+    margin-top:40px;
+    display:inline-flex;align-items:center;gap:14px;
+    border:1px solid var(--line);border-radius:10px;background:var(--bg-alt);
+    padding:12px 18px;
+  }
+  .signal-chip .label{font-family:var(--font-mono);font-size:10.5px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.08em;}
+  .signal-chip .live{color:var(--signal);}
+  svg.mini-chart{width:100px;height:32px;display:block;}
+  .chart-path{fill:none;stroke:var(--signal);stroke-width:2;stroke-dasharray:400;stroke-dashoffset:400;animation:draw 1.6s ease forwards .2s;}
+  @keyframes draw{to{stroke-dashoffset:0;}}
+  @media (prefers-reduced-motion:reduce){.chart-path{animation:none;stroke-dashoffset:0;}}
+
+  /* SECTIONS */
+  section{padding:56px 0;border-bottom:1px solid var(--line);}
+  .eyebrow{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:10px;text-align:center;}
+  h2.section-title{font-family:var(--font-display);font-weight:600;font-size:clamp(24px,5vw,32px);letter-spacing:-.01em;text-align:center;}
+  h2.section-title em{font-style:normal;color:var(--signal);}
+
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:32px;border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+  .card{background:var(--bg);padding:22px 18px;text-align:center;}
+  .card h3{font-family:var(--font-display);font-size:15px;margin-bottom:6px;}
+  .card p{color:var(--ink-dim);font-size:13px;line-height:1.5;}
+
+  .faq{margin-top:28px;}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-item summary{cursor:pointer;list-style:none;padding:16px 0;display:flex;justify-content:space-between;align-items:center;font-family:var(--font-display);font-size:15px;gap:12px;}
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::after{content:'+';font-family:var(--font-mono);color:var(--signal);font-size:18px;flex-shrink:0;}
+  .faq-item[open] summary::after{content:'–';}
+  .faq-item p{color:var(--ink-dim);padding-bottom:16px;font-size:13.5px;}
+
+  .cta-final{text-align:center;padding:56px 20px;border-bottom:1px solid var(--line);}
+  .cta-final h2{font-family:var(--font-display);font-weight:600;font-size:clamp(24px,5vw,32px);max-width:440px;margin:0 auto 12px;}
+  .cta-final p{color:var(--ink-dim);max-width:380px;margin:0 auto 26px;font-size:14.5px;}
+
+  footer{padding:32px 0;}
+  .footer-inner{display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center;}
+  .footer-links{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;font-size:12px;color:var(--ink-dim);}
+  .footer-disclaimer{font-size:11px;color:var(--ink-dim);max-width:460px;line-height:1.6;opacity:.7;}
+  .footer-brand{font-family:var(--font-mono);font-size:11px;color:var(--ink-dim);}
+
+  @media (max-width:520px){
+    .grid-3{grid-template-columns:1fr;}
+    .signal-chip{flex-direction:column;gap:8px;}
+  }
+
+  /* STICKY CTA */
+  .sticky-cta{
+    position:fixed;left:0;right:0;bottom:0;z-index:60;
+    display:flex;justify-content:center;
+    padding:14px 20px calc(14px + env(safe-area-inset-bottom));
+    background:linear-gradient(to top, rgba(8,12,16,.95) 60%, rgba(8,12,16,0));
+    pointer-events:none;
+  }
+  .sticky-cta .btn-primary{
+    pointer-events:auto;
+    width:100%;max-width:400px;justify-content:center;
+    box-shadow:0 8px 24px rgba(0,0,0,.4);
+  }
+  body{padding-bottom:82px;}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <div class="brand-name">NEX <span>AI</span></div>
+      <div class="brand-sub">by Trader Nex</div>
+    </div>
+
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap" style="display:flex;flex-direction:column;align-items:center;">
+    <div class="hero-eyebrow">AI-powered trading intelligence</div>
+    <h1>Trade smarter.<br>Let <em>NEX AI</em> handle the analysis.</h1>
+    <p class="lede">AI-powered market analysis delivered free, straight to your Telegram.</p>
+    <div class="hero-actions">
+      <span class="hero-tags">Free access · Instant setup · Mobile friendly</span>
+    </div>
+
+    <div class="signal-chip">
+      <div>
+        <div class="label">Signal feed <span class="live">● live</span></div>
+      </div>
+      <svg class="mini-chart" viewBox="0 0 100 32" preserveAspectRatio="none">
+        <path class="chart-path" d="M0,26 L14,22 L28,24 L42,14 L56,18 L70,8 L84,12 L100,4"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="eyebrow">Why NEX AI</div>
+    <h2 class="section-title">Intelligence, not <em>noise</em>.</h2>
+    <div class="grid-3">
+      <div class="card"><h3>AI insights</h3><p>Scans markets 24/7 for high-probability setups.</p></div>
+      <div class="card"><h3>60-sec setup</h3><p>One tap into Telegram — no downloads.</p></div>
+      <div class="card"><h3>Beginner friendly</h3><p>Clear signals, no experience required.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="eyebrow">FAQ</div>
+    <h2 class="section-title">Quick answers.</h2>
+    <div class="faq">
+      <details class="faq-item" open>
+        <summary>Is NEX AI really free?</summary>
+        <p>Yes — no card, no trial, no upsell.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Do I need trading experience?</summary>
+        <p>No. It's built to be beginner friendly, but useful for pros too.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How fast can I start?</summary>
+        <p>Under a minute. Tap the button and you're in.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<div class="cta-final" id="join">
+  <h2>Experience a smarter way to trade.</h2>
+  <p>Join a growing community using AI-assisted market analysis — powered by Trader Nex.</p>
+</div>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div class="footer-brand">© 2026 NEX AI by Trader Nex</div>
+    <div class="footer-links">
+      <a href="#privacy">Privacy</a>
+      <a href="#terms">Terms</a>
+      <a href="#risk">Risk Disclaimer</a>
+    </div>
+    <p class="footer-disclaimer">Educational purposes only. Not financial advice. Trading involves risk.</p>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <a href="https://www.claudeusercontent.com/?domain=claude.ai&parentOrigin=https%3A%2F%2Fclaude.ai&errorReportingMode=parent&formattedSpreadsheets=true#join" class="btn-primary" target="_blank" rel="noopener">Join the free Telegram channel →</a>
+</div>
+
+</body>
+</html>
